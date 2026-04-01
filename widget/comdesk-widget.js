@@ -5,6 +5,7 @@
     serviceId: 'comdesk',
     primaryColor: '#00BCD4',
     accentColor: '#F97316',
+    iconUrl: 'https://cdn.jsdelivr.net/gh/widsley/knowledgebase-chatbot-ticket@main/image/comdesklead-icon.png',
   };
 
   const STORAGE_KEY = `widsley_${CONFIG.serviceId}_conversation_id`;
@@ -38,8 +39,7 @@
         width: 56px;
         height: 56px;
         border-radius: 50%;
-        background: ${CONFIG.primaryColor};
-        color: #fff;
+        background: #fff;
         border: none;
         cursor: pointer;
         box-shadow: 0 4px 12px rgba(0,0,0,0.25);
@@ -48,7 +48,13 @@
         align-items: center;
         justify-content: center;
         transition: transform 0.2s;
-        font-size: 24px;
+        padding: 0;
+        overflow: hidden;
+      }
+      .ws-chat-fab img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
       }
       .ws-chat-fab:hover { transform: scale(1.1); }
 
@@ -79,6 +85,18 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+      }
+      .ws-chat-header-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .ws-chat-header-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: #fff;
+        object-fit: cover;
       }
       .ws-chat-header button {
         background: none;
@@ -248,23 +266,27 @@
       }
 
       .ws-typing {
-        display: flex;
+        display: flex !important;
         align-items: center;
-        gap: 4px;
-        padding: 10px 14px;
+        gap: 5px;
+        padding: 12px 16px;
+        white-space: normal;
       }
       .ws-typing-dot {
         width: 8px;
         height: 8px;
+        min-width: 8px;
+        min-height: 8px;
         border-radius: 50%;
-        background: #aaa;
-        animation: ws-bounce 1.2s infinite ease-in-out;
+        background: #999;
+        display: inline-block;
+        animation: ws-bounce 1.4s infinite ease-in-out;
       }
       .ws-typing-dot:nth-child(2) { animation-delay: 0.2s; }
       .ws-typing-dot:nth-child(3) { animation-delay: 0.4s; }
       @keyframes ws-bounce {
-        0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
-        30% { transform: translateY(-6px); opacity: 1; }
+        0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+        40% { transform: translateY(-8px); opacity: 1; }
       }
     `;
     document.head.appendChild(style);
@@ -275,7 +297,7 @@
     // FAB
     const fab = document.createElement('button');
     fab.className = 'ws-chat-fab';
-    fab.innerHTML = '&#128172;';
+    fab.innerHTML = `<img src="${CONFIG.iconUrl}" alt="${CONFIG.serviceName}">`;
     fab.setAttribute('aria-label', `${CONFIG.serviceName} サポートチャット`);
 
     // Chat Panel
@@ -283,7 +305,10 @@
     panel.className = 'ws-chat-panel';
     panel.innerHTML = `
       <div class="ws-chat-header">
-        <span>${CONFIG.serviceName} サポート</span>
+        <div class="ws-chat-header-left">
+          <img src="${CONFIG.iconUrl}" alt="" class="ws-chat-header-icon">
+          <span>${CONFIG.serviceName} サポート</span>
+        </div>
         <button class="ws-chat-close" aria-label="閉じる">&times;</button>
       </div>
       <div class="ws-chat-messages"></div>
