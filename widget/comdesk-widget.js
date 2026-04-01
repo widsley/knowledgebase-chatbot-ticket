@@ -246,6 +246,26 @@
         color: #2e7d32;
         font-size: 15px;
       }
+
+      .ws-typing {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 10px 14px;
+      }
+      .ws-typing-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #aaa;
+        animation: ws-bounce 1.2s infinite ease-in-out;
+      }
+      .ws-typing-dot:nth-child(2) { animation-delay: 0.2s; }
+      .ws-typing-dot:nth-child(3) { animation-delay: 0.4s; }
+      @keyframes ws-bounce {
+        0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+        30% { transform: translateY(-6px); opacity: 1; }
+      }
     `;
     document.head.appendChild(style);
   }
@@ -352,10 +372,20 @@
       return msg;
     }
 
+    function showTyping() {
+      const el = document.createElement('div');
+      el.className = 'ws-msg ws-msg-bot ws-typing';
+      el.innerHTML = '<div class="ws-typing-dot"></div><div class="ws-typing-dot"></div><div class="ws-typing-dot"></div>';
+      messagesEl.appendChild(el);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      return el;
+    }
+
     async function streamResponse(query) {
       isStreaming = true;
       sendBtn.disabled = true;
-      const botMsg = appendMessage('', 'bot');
+      const typingEl = showTyping();
+      let botMsg = null;
 
       try {
         const res = await fetch(`${CONFIG.apiBase}/chat`, {
@@ -369,7 +399,8 @@
         });
 
         if (!res.ok) {
-          botMsg.textContent = 'エラーが発生しました。もう一度お試しください。';
+          typingEl.remove();
+          botMsg = appendMessage('エラーが発生しました。もう一度お試しください。', 'bot');
           return;
         }
 
@@ -394,6 +425,10 @@
               const data = JSON.parse(jsonStr);
 
               if (data.event === 'message' || data.event === 'agent_message') {
+                if (!botMsg) {
+                  typingEl.remove();
+                  botMsg = appendMessage('', 'bot');
+                }
                 botMsg.textContent += data.answer || '';
                 messagesEl.scrollTop = messagesEl.scrollHeight;
                 if (data.conversation_id) {
@@ -412,11 +447,14 @@
           }
         }
       } catch (err) {
+        typingEl.remove();
+        if (!botMsg) botMsg = appendMessage('', 'bot');
         botMsg.textContent = '通信エラーが発生しました。ネットワーク接続を確認してください。';
       } finally {
         isStreaming = false;
         sendBtn.disabled = false;
-        if (!botMsg.textContent) {
+        if (typingEl.parentNode) typingEl.remove();
+        if (botMsg && !botMsg.textContent) {
           botMsg.textContent = '回答を取得できませんでした。';
         }
       }
