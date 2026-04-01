@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comdesk Lead サポート</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+      color: #333;
+      background: #f8f9fa;
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ===== Header ===== */
+    .header {
+      background: #fff;
+      border-bottom: 1px solid #e9ecef;
+      padding: 12px 0;
+    }
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .header-logo {
+      height: 28px;
+    }
+    .header-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #555;
+    }
+
+    /* ===== Hero ===== */
+    .hero {
+      background: linear-gradient(135deg, #00BCD4 0%, #00897B 100%);
+      color: #fff;
+      text-align: center;
+      padding: 64px 20px 56px;
+    }
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .hero p {
+      font-size: 16px;
+      opacity: 0.9;
+      margin-bottom: 32px;
+    }
+    .search-form {
+      max-width: 520px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .search-form input {
+      width: 100%;
+      padding: 14px 48px 14px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      outline: none;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+    .search-form button {
+      position: absolute;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #00BCD4;
+      border: none;
+      color: #fff;
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .search-form button:hover { background: #00a5bb; }
+
+    /* ===== Section Common ===== */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 20px;
+    }
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: #222;
+    }
+
+    /* ===== Category Cards ===== */
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .cat-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 28px 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      transition: box-shadow 0.2s, transform 0.2s;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .cat-card:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      transform: translateY(-2px);
+    }
+    .cat-icon {
+      font-size: 28px;
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      background: #e0f7fa;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cat-card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #222;
+    }
+    .cat-card p {
+      font-size: 13px;
+      color: #777;
+      line-height: 1.5;
+    }
+
+    /* ===== Articles ===== */
+    .articles-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+    .article-block h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #00BCD4;
+      color: #222;
+    }
+    .article-list {
+      list-style: none;
+    }
+    .article-list li {
+      border-bottom: 1px solid #eee;
+    }
+    .article-list a {
+      display: block;
+      padding: 12px 0;
+      font-size: 14px;
+      color: #444;
+      transition: color 0.2s;
+    }
+    .article-list a:hover { color: #00BCD4; }
+    .article-list a::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-right: 2px solid #00BCD4;
+      border-bottom: 2px solid #00BCD4;
+      transform: rotate(-45deg);
+      margin-right: 10px;
+    }
+
+    /* ===== Contact ===== */
+    .contact-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .contact-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 32px 24px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      transition: box-shadow 0.2s;
+    }
+    .contact-card:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+    .contact-icon {
+      font-size: 36px;
+      margin-bottom: 16px;
+    }
+    .contact-card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .contact-card p {
+      font-size: 13px;
+      color: #777;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+    .contact-btn {
+      display: inline-block;
+      padding: 10px 28px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.2s;
+    }
+    .contact-btn:hover { opacity: 0.85; }
+    .btn-primary { background: #00BCD4; color: #fff; }
+    .btn-outline { background: #fff; color: #00BCD4; border: 1px solid #00BCD4; }
+
+    /* ===== Footer ===== */
+    .footer {
+      background: #263238;
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      padding: 24px 20px;
+      font-size: 13px;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 768px) {
+      .hero { padding: 48px 20px 40px; }
+      .hero h1 { font-size: 22px; }
+      .hero p { font-size: 14px; }
+
+      .categories { grid-template-columns: 1fr; }
+
+      .articles-row { grid-template-columns: 1fr; gap: 24px; }
+
+      .contact-cards { grid-template-columns: 1fr; }
+
+      .header-inner { justify-content: center; }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .categories { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <img src="https://comdesk.com/wp-content/themes/comdesk/assets/images/common/logo.svg" alt="Comdesk" class="header-logo">
+      <span class="header-title">ヘルプセンター</span>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Comdesk Lead サポートへようこそ</h1>
+    <p>ご不明な点がございましたら、こちらから検索いただけます</p>
+    <form class="search-form" onsubmit="doSearch(event)">
+      <input type="text" id="search-input" placeholder="キーワードで検索..." autocomplete="off">
+      <button type="submit" aria-label="検索">&#128269;</button>
+    </form>
+  </section>
+
+  <!-- Category Cards -->
+  <section class="section">
+    <h2 class="section-title">ナレッジベース</h2>
+    <div class="categories">
+
+      <a href="/docs/release-notes" class="cat-card">
+        <div class="cat-icon">&#128227;</div>
+        <div>
+          <h3>リリースノート・お知らせ</h3>
+          <p>最新のアップデート情報やお知らせ</p>
+        </div>
+      </a>
+
+      <a href="/docs/getting-started" class="cat-card">
+        <div class="cat-icon">&#128640;</div>
+        <div>
+          <h3>はじめてガイド</h3>
+          <p>初期設定から基本操作まで</p>
+        </div>
+      </a>
+
+      <a href="/docs/features" class="cat-card">
+        <div class="cat-icon">&#9881;&#65039;</div>
+        <div>
+          <h3>機能一覧</h3>
+          <p>各機能の詳しい使い方</p>
+        </div>
+      </a>
+
+      <a href="/docs/hardware" class="cat-card">
+        <div class="cat-icon">&#128222;</div>
+        <div>
+          <h3>ハードウェアについて</h3>
+          <p>推奨機器・接続方法のご案内</p>
+        </div>
+      </a>
+
+      <a href="/docs/troubleshooting" class="cat-card">
+        <div class="cat-icon">&#128295;</div>
+        <div>
+          <h3>トラブルシューティング</h3>
+          <p>よくある問題の解決方法</p>
+        </div>
+      </a>
+
+      <a href="/docs/plans" class="cat-card">
+        <div class="cat-icon">&#128176;</div>
+        <div>
+          <h3>製品・プランについて</h3>
+          <p>料金プランや契約に関するご案内</p>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- Articles -->
+  <section class="section" style="padding-top: 0;">
+    <div class="articles-row">
+
+      <div class="article-block">
+        <h3>ピックアップ記事</h3>
+        <!-- 手動管理：記事URLはGitBookのURLに差し替え -->
+        <ul class="article-list">
+          <li><a href="/docs/getting-started/initial-setup">初期設定の手順</a></li>
+          <li><a href="/docs/features/call-history">通話履歴の確認方法</a></li>
+          <li><a href="/docs/features/auto-call">オートコール機能の使い方</a></li>
+          <li><a href="/docs/hardware/headset-setup">ヘッドセットの接続方法</a></li>
+          <li><a href="/docs/features/ip-phone">IP電話の設定方法</a></li>
+        </ul>
+      </div>
+
+      <div class="article-block">
+        <h3>よく見られている記事</h3>
+        <!-- 手動管理：記事URLはGitBookのURLに差し替え -->
+        <!-- 将来的にGitBook APIで自動取得する場合はここを動的に置き換え -->
+        <ul class="article-list">
+          <li><a href="/docs/troubleshooting/audio-issues">音声トラブルの対処法</a></li>
+          <li><a href="/docs/features/crm-integration">CRM連携の設定</a></li>
+          <li><a href="/docs/troubleshooting/login-issues">ログインできない場合</a></li>
+          <li><a href="/docs/features/report">レポート機能の使い方</a></li>
+          <li><a href="/docs/plans/change-plan">プラン変更の手順</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="section" style="background: #fff; max-width: 100%; padding: 48px 20px;">
+    <div style="max-width: 1100px; margin: 0 auto;">
+      <h2 class="section-title">お問い合わせ</h2>
+      <div class="contact-cards">
+
+        <div class="contact-card">
+          <div class="contact-icon">&#128172;</div>
+          <h3>チャットで相談</h3>
+          <p>AIチャットボットが<br>24時間お答えします</p>
+          <button class="contact-btn btn-primary" onclick="openChat()">チャットを開く</button>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-icon">&#128222;</div>
+          <h3>お電話でのお問い合わせ</h3>
+          <p>03-6327-2771<br>平日 10:00〜19:00</p>
+          <a href="tel:03-6327-2771" class="contact-btn btn-outline">電話をかける</a>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-icon">&#9993;&#65039;</div>
+          <h3>フォームで問い合わせ</h3>
+          <p>メールにて折り返し<br>ご連絡いたします</p>
+          <a href="#" class="contact-btn btn-outline">お問い合わせフォーム</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    &copy; 2026 Widsley, Inc. All rights reserved.
+  </footer>
+
+  <!-- Chat Widget -->
+  <script src="https://cdn.jsdelivr.net/gh/widsley/knowledgebase-chatbot-ticket@main/widget/comdesk-widget.js"></script>
+
+  <script>
+    function doSearch(e) {
+      e.preventDefault();
+      var query = document.getElementById('search-input').value.trim();
+      if (query) {
+        window.location.href = '/docs/search?q=' + encodeURIComponent(query);
+      }
+    }
+
+    function openChat() {
+      var fab = document.querySelector('.ws-chat-fab');
+      if (fab) fab.click();
+    }
+  </script>
+
+</body>
+</html>
